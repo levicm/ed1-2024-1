@@ -2,9 +2,10 @@ package a03_lista_parte02_aloc_din;
 
 public class Lista {
 
-	private Aluno[] alunos = new Aluno[100];
+	private Aluno[] alunos = new Aluno[10];
 
 	public void adiciona(Aluno aluno) {
+		garanteEspaco();
 		for (int i = 0; i < alunos.length; ++i) {
 			if (alunos[i] == null) {
 				alunos[i] = aluno;
@@ -14,6 +15,7 @@ public class Lista {
 	}
 	
 	public void adiciona(Aluno aluno, int posicao) {
+		garanteEspaco();
 		int tamanho = tamanho();
 		// Testa se é uma posição válida
 		if (posicao <= tamanho) {
@@ -26,6 +28,14 @@ public class Lista {
 		}
 	}
 	
+	private void garanteEspaco() {
+		// Verificar se precisa de espaço
+		if (tamanho() == alunos.length) {
+			// Alocar mais espaco
+			
+		}
+	}
+
 	public int tamanho() {
 		int resultado = 0;
 		for (int i = 0; i < alunos.length; ++i) {

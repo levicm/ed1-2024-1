@@ -61,6 +61,7 @@ public class Lista {
 			for (int i = posicao; i < tamanho; ++i) {
 				elementos[i] = elementos[i + 1];
 			}
+			tamanho--;
 		}
 	}
 	
@@ -68,15 +69,11 @@ public class Lista {
 	public String toString() {
 		StringBuilder resultado = new StringBuilder("[");
 		// Concatenar os strings dos elementos no resultado
-		for (int i = 0; i < elementos.length; ++i) {
-			if (elementos[i] != null) {
-				if (i > 0) {
-					resultado.append(", ");
-				}
-				resultado.append(elementos[i].toString());
-			} else {
-				break;
+		for (int i = 0; i < tamanho; ++i) {
+			if (i > 0) {
+				resultado.append(", ");
 			}
+			resultado.append(elementos[i].toString());
 		}
 		resultado.append("]");
 		return resultado.toString();

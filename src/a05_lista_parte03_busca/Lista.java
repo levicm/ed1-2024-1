@@ -1,17 +1,17 @@
-package a04_lista_parte02_generics;
+package a05_lista_parte03_busca;
 
-public class Lista<T> {
+public class Lista {
 
 	private Object[] elementos = new Object[10];
 	private int tamanho = 0;
 
-	public void adiciona(T elemento) {
+	public void adiciona(Object elemento) {
 		garanteEspaco();
 		elementos[tamanho] = elemento;
 		tamanho++;
 	}
 	
-	public void adiciona(T elemento, int posicao) {
+	public void adiciona(Object elemento, int posicao) {
 		garanteEspaco();
 		// Testa se é uma posição válida
 		if (posicao <= tamanho) {
@@ -47,10 +47,10 @@ public class Lista<T> {
 		return tamanho;
 	}
 
-	public T pega(int posicao) {
-		T resultado = null;
+	public Object pega(int posicao) {
+		Object resultado = null;
 		if (posicao < elementos.length) {
-			resultado = (T) elementos[posicao];
+			resultado = elementos[posicao];
 		}
 		return resultado;
 	}
@@ -63,6 +63,28 @@ public class Lista<T> {
 			}
 			tamanho--;
 		}
+	}
+	
+	public int busca(Object elemento) {
+		int resultado = -1;
+		for (int i = 0; i < tamanho; ++i) {
+			// teste se o elemento atual é igual ao elemento passado
+			if (elemento.equals(elementos[i])) {
+				resultado = i;
+				break;
+			}
+		}		
+		return resultado;
+	}
+	
+	public int buscaUltimo(Object elemento) {
+		int resultado = -1;
+		// Implementar a lógica
+		return resultado;
+	}
+	
+	public void removeTodos(Object elemento) {
+		// Implementar a lógica
 	}
 	
 	@Override

@@ -1,48 +1,53 @@
-package a08_lista_ligada_parte01;
+package a09_lista_duplamente_ligada_parte01;
 
-public class ListaLigada {
+public class ListaDuplamenteLigada {
 	
 	private Celula inicio;
+	private Celula fim;
+	
 	private int tamanho;
 
+	public void adicionaNoComeco(Object elemento) {
+		Celula nova = new Celula(elemento);
+		if (inicio == null) {
+			// Vazia
+			inicio = nova;
+			fim = nova;
+		} else {
+			inicio.setAnterior(nova);
+			nova.setProxima(inicio);
+			inicio = nova;
+		}
+		tamanho++;
+	}
+	
 	public void adiciona(Object elemento) {
 		if (inicio == null) {
 			adicionaNoComeco(elemento);
 		} else {
-			Celula nova = new Celula(elemento, null);
-			Celula ultima = pegaUltima();
-			ultima.setProxima(nova);
+			Celula nova = new Celula(elemento);
+			fim.setProxima(nova);
+			nova.setAnterior(fim);
+			fim = nova;
 			tamanho++;
 		}
 	}
 	
-	private Celula pegaUltima() {
-		Celula celula = inicio;
-		if (celula != null) {
-			while(celula.getProxima() != null) {
-				celula = celula.getProxima();
-			}
-		}
-		return celula;
-	}
-
 	public void adiciona(Object elemento, int posicao) {
 		if (posicao == 0) {
 			adicionaNoComeco(elemento);
 		} else if (posicao == tamanho) {
 			adiciona(elemento);
 		} else if (posicaoValida(posicao)) {
-			Celula anterior = pegaCelula(posicao - 1);
-			Celula nova = new Celula(elemento, anterior.getProxima());
+			Celula celula = pegaCelula(posicao);
+			Celula anterior = celula.getAnterior();
+
+			Celula nova = new Celula(elemento, celula, anterior);
+
 			anterior.setProxima(nova);
+			celula.setAnterior(nova);
 			tamanho++;
 		}
-	}
-	
-	public void adicionaNoComeco(Object elemento) {
-		Celula nova = new Celula(elemento, inicio);
-		inicio = nova;
-		tamanho++;
 	}
 	
 	public Object pega(int posicao) {
@@ -71,11 +76,28 @@ public class ListaLigada {
 	public void remove(int posicao) {
 		if (posicaoValida(posicao)) {
 			if (posicao == 0) {
-				inicio = inicio.getProxima();
+				// Se for a primeira
+				if (tamanho == 1) {
+					// Se for a única
+					inicio = null;
+					fim = null;
+				} else {
+					inicio = inicio.getProxima();
+					inicio.setAnterior(null);
+				} 
 			} else {
-				Celula anterior = pegaCelula(posicao - 1);
-				Celula celula = anterior.getProxima();
-				anterior.setProxima(celula.getProxima());
+				if (posicao == tamanho - 1) {
+					// Se for a última
+					fim = fim.getAnterior();
+					fim.setProxima(null);
+				} else {
+					Celula aRemover = pegaCelula(posicao);
+					Celula antes = aRemover.getAnterior();
+					Celula depois = aRemover.getProxima();
+					
+					antes.setProxima(depois);
+					depois.setAnterior(antes);
+				}
 			}
 			tamanho--;
 		}
